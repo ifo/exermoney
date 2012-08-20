@@ -1,0 +1,19 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
+    style(type='text/css')
+      #content { padding-top: 60px; }
+  body
+    .topbar-wrapper
+      .topbar
+        .topbar-inner
+          .container
+            h3: a(href="/")= title
+            ul.nav
+              li: a(href="/workout/new") New Workout
+              li: a(href='/workouttype/new') New Workout Type
+              li: a(href='/goal/new') New Goal
+    #content.container
+      block content

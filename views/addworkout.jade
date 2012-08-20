@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  form(method='post', action='/workout/new')
+    fieldset
+      legend= title
+      .clearfix
+        label(for='workout') Workout
+        .input
+          input.xlarge#workout(type='text', name='post[workout]')
+      .clearfix
+        label(for='workouttime') Workout Time
+        .input
+          input.xlarge#workouttime(type='text', name='post[workouttime]')
+      .clearfix
+        label(for='workouttype') Workout Type
+        .input
+          select.xlarge#workouttype(name='post[workouttype]')
+            - each workouttype in workouttypes
+              option(value='workouttype.id')
+                workouttype.name, $workouttype.value
