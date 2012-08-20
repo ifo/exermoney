@@ -3,7 +3,22 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  - each workouttype in workouttypes
-    div.workouttype
-      div.name= workouttype.name
-      div.value= workouttype.value
+  fieldset
+    legend workouts
+    - each workout in workouts
+      div.workout
+        div.description= workout.description
+        div.workouttype= workout.type
+        div.workouttime= workout.time
+  fieldset
+    legend workout types
+    - each workouttype in workouttypes
+      div.workouttype
+        div.name= workouttype.name
+        div.value= workouttype.value
+  fieldset
+    legend goals
+    - each goal in goals
+      div.goal
+        div.name= goal.name
+        div.weight= goal.weight

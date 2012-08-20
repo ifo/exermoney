@@ -22,12 +22,11 @@ module.exports =
   newWorkout: (req, res) ->
     res.render 'addworkout',
       title: 'new workout'
+      workouttypes: workouttypes
 
   addWorkout: (req, res) ->
-    workout.name = req.body.workout
+    workout = req.body.workout
     workout.id = workouts.length
-    workout.type = req.body.workouttype
-    workout.time = req.body.workouttime
     workouts.push workout
     res.redirect '/'
 
@@ -46,13 +45,14 @@ module.exports =
       title: 'additional goal'
 
   addGoal: (req, res) ->
-    goal = res.body.goal
-    goal.weight = res.body.weight
+    goal = req.body.goal
+    goal.id = goals.length
     goals.push goal
     res.redirect '/'
 
   addWeight: (req, res) ->
     currentWeight = res.body.weight
+    currentWeight.time = getTime
     weight.push currentWeight
     res.redirect '/'
 
