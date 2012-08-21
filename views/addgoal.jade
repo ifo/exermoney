@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  form(method='post', action='/goal/new')
+    fieldset
+      legend= title
+      .clearfix
+        label(for='name') Name
+        .input
+          input.xlarge#name(type='text', name='goal[name]')
+      .clearfix
+        label(for='cost') Cost
+        .input
+          input.xlarge#cost(type='text', name='goal[value]')
+      .clearfix
+        label(for='weight') Weight
+        .input
+          input.xlarge#weight(type='text', name='goal[weight]')     
+      .actions
+        input.btn.primary(type='submit', value='Add Goal')
+        |
+        a.btn(href='/') Cancel

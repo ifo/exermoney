@@ -7,7 +7,7 @@
 workouts = []
 workouttypes= []
 goals = []
-weight = []
+weights = []
 
 
 module.exports =
@@ -17,7 +17,7 @@ module.exports =
       workouts: workouts
       workouttypes: workouttypes
       goals: goals
-      weight: weight
+      weight: weights[0]
 
   newWorkout: (req, res) ->
     res.render 'addworkout',
@@ -51,8 +51,8 @@ module.exports =
     res.redirect '/'
 
   addWeight: (req, res) ->
-    currentWeight = res.body.weight
-    currentWeight.time = getTime
-    weight.push currentWeight
+    currentWeight = req.body.weight
+    currentWeight.time = new Date
+    weights.push currentWeight
     res.redirect '/'
 

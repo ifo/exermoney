@@ -11,9 +11,12 @@ html
         .topbar-inner
           .container
             h3: a(href="/") exermoney
-            ul.nav
-              li: a(href="/workout/new") New Workout
-              li: a(href='/workouttype/new') New Workout Type
-              li: a(href='/goal/new') New Goal
+            form(method='post', action='/weight/new')
+              ul.nav
+                li: a(href="/workout/new") New Workout
+                li: a(href='/workouttype/new') New Workout Type
+                li: a(href='/goal/new') New Goal
+                li: input.xlarge#weight(type='text', name='weight')
+                li: input.btn.primary(type='submit', value='Today's Weight')
     #content.container
       block content
