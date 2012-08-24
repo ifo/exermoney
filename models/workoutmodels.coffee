@@ -7,13 +7,13 @@ Unit = new mongoose.Schema(
 WorkoutType = new mongoose.Schema(
   name: String
   value: Number
-  #unit: ObjectId
+  unit: mongoose.Schema.Types.ObjectId
 )
 
 Workout = new mongoose.Schema(
   description: String
   number: Number
-  #type: ObjectId
+  type: mongoose.Schema.Types.ObjectId
   date: Date
 )
 
@@ -34,8 +34,3 @@ module.exports =
   Workout: mongoose.model 'Workout', Workout
   Goal: mongoose.model 'Goal', Goal
   Weight: mongoose.model 'Weight', Weight
-
-#module.exports = mongoose.model 'WorkoutType', WorkoutType
-#module.exports = mongoose.model 'Workout', Workout
-#module.exports = mongoose.model 'Goal', Goal
-#module.exports = mongoose.model 'Weight', Weight
