@@ -4,11 +4,21 @@
 # 
 
 # placeholder objects
+
+models = require '../models/workoutmodels'
+
+workout = models.Workout
+workouttype = models.WorkoutType
+goal = models.Goal
+weight = models.Weight
+unit = models.Unit
+
 workouts = []
-workouttypes= []
+workouttypes = []
 goals = []
 weights = []
 
+model = require '../models/workoutmodels'
 
 module.exports =
   index: (req, res) ->

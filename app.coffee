@@ -7,6 +7,7 @@ routes = require("./routes")
 http = require("http")
 path = require("path")
 mongoose = require("mongoose")
+connection = require("./connection")
 app = express()
 app.configure ->
   app.set "port", process.env.PORT or 3000
@@ -20,7 +21,11 @@ app.configure ->
   app.use express.static(path.join(__dirname, "public"))
 
 app.configure "development", ->
-  mongoose.connect 'mongodb://localhost/exermoney-dev'
+  mongoose.connect connection.development
+  app.use express.errorHandler()
+
+app.configure "production", ->
+  mongoose.connect connection.production
   app.use express.errorHandler()
 
 app.get "/", routes.index
