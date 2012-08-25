@@ -7,6 +7,7 @@ routes = require("./routes")
 http = require("http")
 path = require("path")
 mongoose = require("mongoose")
+#connection.coffee file containing connection string information
 connection = require("./connection")
 app = express()
 app.configure ->

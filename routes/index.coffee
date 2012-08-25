@@ -22,12 +22,13 @@ model = require '../models/workoutmodels'
 
 module.exports =
   index: (req, res) ->
-    res.render 'index',
-      title: 'exermoney'
-      workouts: workouts
-      workouttypes: workouttypes
-      goals: goals
-      weight: weights[0]
+    weight.find {}, (err, weight) ->
+      res.render 'index',
+        title: 'exermoney'
+        workouts: workouts
+        workouttypes: workouttypes
+        goals: goals
+        weights: weight
 
   newWorkout: (req, res) ->
     res.render 'addworkout',
@@ -61,8 +62,15 @@ module.exports =
     res.redirect '/'
 
   addWeight: (req, res) ->
+    req.body.weight.time = new Date
+    new weight(req.body.weight).save ->
+      res.redirect '/'
+
+###
+  addWeight: (req, res) ->
     currentWeight = req.body.weight
     currentWeight.time = new Date
     weights.push currentWeight
     res.redirect '/'
+###
 
