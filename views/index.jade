@@ -24,10 +24,11 @@ block content
         div.weight= goal.weight
         div.value= goal.value
   fieldset
-    legend current weights
+    legend current weight
     div.weight
-      dev.weight= weights.weight
-    //- each weight in weights
-      //-div.weight
-        //-div.weight= weight.weight
-        //-div.id= weight._id
+      div.weight= weights.weight
+  fieldset
+    legend workout units
+    - each unit in units
+      div.unit
+        div.unit= unit.name

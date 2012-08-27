@@ -15,8 +15,6 @@ unit = models.Unit
 
 workouts = []
 workouttypes = []
-goals = []
-weights = []
 
 model = require '../models/workoutmodels'
 
@@ -24,12 +22,14 @@ module.exports =
   index: (req, res) ->
     weight.find {}, (err, weight) ->
       goal.find {}, (err, goal) ->
-        res.render 'index',
-          title: 'exermoney'
-          workouts: workouts
-          workouttypes: workouttypes
-          goals: goal
-          weights: weight[weight.length-1]
+        unit.find {}, (err, unit) ->
+          res.render 'index',
+            title: 'exermoney'
+            workouts: workouts
+            workouttypes: workouttypes
+            goals: goal
+            weights: weight[weight.length-1]
+            units: unit
 
   newWorkout: (req, res) ->
     res.render 'addworkout',
@@ -81,11 +81,11 @@ module.exports =
     new weight(newWeight).save ->
       res.redirect '/'
 
-###
-  addWeight: (req, res) ->
-    currentWeight = req.body.weight
-    currentWeight.time = new Date
-    weights.push currentWeight
-    res.redirect '/'
-###
+  newUnit: (req, res) ->
+    res.render 'addunit'
+      title: 'new workout unit'
+
+  addUnit: (req, res) ->
+    new unit(req.body.unit).save ->
+      res.redirect '/'
 

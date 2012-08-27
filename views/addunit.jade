@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  form(method='post', action='/unit/new')
+    fieldset
+      legend= title
+      .clearfix
+        label(for='name') Name
+        .input
+          input.xlarge#name(type='text', name='unit[name]')
+      .actions
+        input.btn.primary(type='submit', value='Add Unit')
+        |
+        a.btn(href='/') Cancel

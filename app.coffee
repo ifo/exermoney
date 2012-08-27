@@ -42,6 +42,9 @@ app.post '/goal/new', routes.addGoal
 
 app.post '/weight/new', routes.addWeight
 
+app.get '/unit/new', routes.newUnit
+app.post '/unit/new', routes.addUnit
+
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
