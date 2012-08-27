@@ -22,9 +22,12 @@ block content
       div.goal
         div.name= goal.name
         div.weight= goal.weight
+        div.value= goal.value
   fieldset
     legend current weights
-    - each weight in weights
-      div.weight
-        div.weight= weight.weight
-        div.id= weight._id
+    div.weight
+      dev.weight= weights.weight
+    //- each weight in weights
+      //-div.weight
+        //-div.weight= weight.weight
+        //-div.id= weight._id

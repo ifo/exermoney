@@ -23,12 +23,13 @@ model = require '../models/workoutmodels'
 module.exports =
   index: (req, res) ->
     weight.find {}, (err, weight) ->
-      res.render 'index',
-        title: 'exermoney'
-        workouts: workouts
-        workouttypes: workouttypes
-        goals: goals
-        weights: weight
+      goal.find {}, (err, goal) ->
+        res.render 'index',
+          title: 'exermoney'
+          workouts: workouts
+          workouttypes: workouttypes
+          goals: goal
+          weights: weight[weight.length-1]
 
   newWorkout: (req, res) ->
     res.render 'addworkout',
@@ -56,14 +57,28 @@ module.exports =
       title: 'additional goal'
 
   addGoal: (req, res) ->
+    ###
     goal = req.body.goal
     goal.id = goals.length
     goals.push goal
-    res.redirect '/'
+    ###
+    newGoal = req.body.goal
+    newGoal.value = parseFloat(newGoal.value)
+    newGoal.weight = parseFloat(newGoal.weight)
+    new goal(newGoal).save ->
+      res.redirect '/'
 
   addWeight: (req, res) ->
-    req.body.weight.time = new Date
-    new weight(req.body.weight).save ->
+    
+    newWeight = 
+      "weight": parseFloat(req.body.weight)
+      "date": new Date()
+    ###
+    #req.body.weight.time = new Date
+    addWeight[weight] = parseFloat(req.body.weight)
+    addWeight[date] = new Date()
+    ###
+    new weight(newWeight).save ->
       res.redirect '/'
 
 ###

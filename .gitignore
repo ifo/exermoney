@@ -1,3 +1,3 @@
-*.swp
+*.sw*
 data
 node_modules
