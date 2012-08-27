@@ -13,58 +13,65 @@ goal = models.Goal
 weight = models.Weight
 unit = models.Unit
 
-workouts = []
-workouttypes = []
-
-model = require '../models/workoutmodels'
-
 module.exports =
   index: (req, res) ->
     weight.find {}, (err, weight) ->
       goal.find {}, (err, goal) ->
         unit.find {}, (err, unit) ->
-          res.render 'index',
-            title: 'exermoney'
-            workouts: workouts
-            workouttypes: workouttypes
-            goals: goal
-            weights: weight[weight.length-1]
-            units: unit
+          workouttype.find {}, (err, workouttype) ->
+            workout.find {}, (err, workout) ->
+              res.render 'index',
+                title: 'exermoney'
+                workouts: workout
+                workouttypes: workouttype
+                goals: goal
+                weights: weight[weight.length-1]
+                units: unit
 
   newWorkout: (req, res) ->
-    res.render 'addworkout',
-      title: 'new workout'
-      workouttypes: workouttypes
+    workouttype.find {}, (err, workouttype) ->
+      res.render 'addworkout',
+        title: 'new workout'
+        workouttypes: workouttype
 
   addWorkout: (req, res) ->
+    ###
     workout = req.body.workout
     workout.id = workouts.length
     workouts.push workout
-    res.redirect '/'
+    ###
+    newWorkout = req.body.workout
+    newWorkout.number = parseFloat newWorkout.number
+    newWorkout.date = new Date()
+    new workout(newWorkout).save ->
+      res.redirect '/'
 
   newWorkoutType: (req, res) ->
-    res.render 'addworkouttype',
-      title: 'new workout type'
+    unit.find {}, (err, unit) ->
+      res.render 'addworkouttype',
+        title: 'new workout type'
+        units: unit
 
   addWorkoutType: (req, res) ->
+    ###
     workouttype = req.body.workouttype
     workouttype.id = workouttypes.length
     workouttypes.push workouttype
-    res.redirect '/'
+    ###
+    newWorkouttype = req.body.workouttype
+    newWorkouttype.value = parseFloat newWorkouttype.value
+    newWorkouttype.per = parseFloat newWorkouttype.per
+    new workouttype(req.body.workouttype).save ->
+      res.redirect '/'
 
   newGoal: (req, res) ->
     res.render 'addgoal',
       title: 'additional goal'
 
   addGoal: (req, res) ->
-    ###
-    goal = req.body.goal
-    goal.id = goals.length
-    goals.push goal
-    ###
     newGoal = req.body.goal
-    newGoal.value = parseFloat(newGoal.value)
-    newGoal.weight = parseFloat(newGoal.weight)
+    newGoal.value = parseFloat newGoal.value
+    newGoal.weight = parseFloat newGoal.weight
     new goal(newGoal).save ->
       res.redirect '/'
 
@@ -73,11 +80,6 @@ module.exports =
     newWeight = 
       "weight": parseFloat(req.body.weight)
       "date": new Date()
-    ###
-    #req.body.weight.time = new Date
-    addWeight[weight] = parseFloat(req.body.weight)
-    addWeight[date] = new Date()
-    ###
     new weight(newWeight).save ->
       res.redirect '/'
 

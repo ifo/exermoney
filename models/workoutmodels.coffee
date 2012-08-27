@@ -7,6 +7,7 @@ Unit = new mongoose.Schema(
 WorkoutType = new mongoose.Schema(
   name: String
   value: Number
+  per: Number
   unit: mongoose.Schema.Types.ObjectId
 )
 

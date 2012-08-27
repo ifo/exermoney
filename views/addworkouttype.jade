@@ -12,6 +12,16 @@ block content
         label(for='value') Value
         .input
           input.xlarge#value(type='text', name='workouttype[value]')
+      .clearfix
+        label(for='per') Per
+        .input
+          input.xlarge#value(type='text', name='workouttype[per]')
+      .clearfix
+        label(for='unit') Unit
+        .input
+          select.xlarge#unit(name='workouttype[unit]')
+            - each unit in units
+              option(value='#{unit.id}')= unit.name
       .actions
         input.btn.primary(type='submit', value='Add New Workout Type')
         |

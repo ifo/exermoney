@@ -13,11 +13,11 @@ block content
         .input
           select.xlarge#workouttype(name='workout[type]')
             - each workouttype in workouttypes
-              option(value='#{workouttype.id}')= workouttype.name
+              option(value='#{workouttype._id}')= workouttype.name
       .clearfix
         label(for='workouttime') Workout Time / Reps
         .input
-          input.xlarge#workouttime(type='text', name='workout[time]')
+          input.xlarge#workouttime(type='text', name='workout[number]')
       .actions
         input.btn.primary(type='submit', value='Workedout!')
         |
