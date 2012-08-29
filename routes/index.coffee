@@ -7,11 +7,14 @@
 
 models = require '../models/workoutmodels'
 
-workout = models.Workout
+unit = models.Unit
 workouttype = models.WorkoutType
+workout = models.Workout
+workouttarget = models.WorkoutTarget
 goal = models.Goal
 weight = models.Weight
-unit = models.Unit
+expense = models.Expense
+user = models.User
 
 module.exports =
   index: (req, res) ->
@@ -35,14 +38,8 @@ module.exports =
         workouttypes: workouttype
 
   addWorkout: (req, res) ->
-    ###
-    workout = req.body.workout
-    workout.id = workouts.length
-    workouts.push workout
-    ###
     newWorkout = req.body.workout
     newWorkout.number = parseFloat newWorkout.number
-    newWorkout.date = new Date()
     new workout(newWorkout).save ->
       res.redirect '/'
 
@@ -53,11 +50,6 @@ module.exports =
         units: unit
 
   addWorkoutType: (req, res) ->
-    ###
-    workouttype = req.body.workouttype
-    workouttype.id = workouttypes.length
-    workouttypes.push workouttype
-    ###
     newWorkouttype = req.body.workouttype
     newWorkouttype.value = parseFloat newWorkouttype.value
     newWorkouttype.per = parseFloat newWorkouttype.per
@@ -76,10 +68,8 @@ module.exports =
       res.redirect '/'
 
   addWeight: (req, res) ->
-    
-    newWeight = 
-      "weight": parseFloat(req.body.weight)
-      "date": new Date()
+    newWeight = {}
+    newWeight.weight = parseFloat req.body.weight
     new weight(newWeight).save ->
       res.redirect '/'
 
@@ -89,5 +79,15 @@ module.exports =
 
   addUnit: (req, res) ->
     new unit(req.body.unit).save ->
+      res.redirect '/'
+
+  newUser: (req, res) ->
+    res.render 'adduser'
+      title: 'new user'
+
+  addUser: (req, res) ->
+    newUser = req.body.user
+    newUser.balance = 0
+    new user(newUser).save ->
       res.redirect '/'
 
