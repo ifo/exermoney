@@ -19,15 +19,15 @@ user = models.User
 module.exports =
   index: (req, res) ->
     unit.find {}, (err, unit) ->
-      user.find {"name" : "Steve"}, (err, usr) ->
+      user.findOne {"name" : "Steve"}, (err, usr) ->
         res.render 'index',
           title: 'exermoney'
-          user: usr
           workouts: usr.workouts
           workouttypes: usr.workouttypes
           goals: usr.goals
-          weights: usr.weights
+          weights: usr.weights[usr.weights.length - 1]
           units: unit
+          user: usr
 
   newWorkout: (req, res) ->
     workouttype.find {}, (err, workouttype) ->
@@ -74,9 +74,6 @@ module.exports =
       else
         usr.weights = [newWeight]
       usr.save ->
-      #toAddWeight = new weight newWeight
-      #usr.weights.push(newWeight) ->
-        #usr.save ->
         res.redirect '/'
 
   newUnit: (req, res) ->
