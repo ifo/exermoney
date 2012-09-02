@@ -5,27 +5,31 @@ block content
   p Welcome to #{title}
   fieldset
     legend workouts
-    - each workout in workouts
-      div.workout
-        div.description= workout.description
-        div.workouttype= workout.type
-        div.workouttime= workout.time
+    - if (typeof(workouts) != 'undefined')
+      - each workout in workouts
+        div.workout
+          div.description= workout.description
+          div.workouttype= workout.type
+          div.workouttime= workout.time
   fieldset
     legend workout types
-    - each workouttype in workouttypes
-      div.workouttype
-        div.name= workouttype.name
-        div.value= workouttype.value
+    - if (typeof(workouts) != 'undefined')
+      - each workouttype in workouttypes
+        div.workouttype
+          div.name= workouttype.name
+          div.value= workouttype.value
   fieldset
     legend goals
-    - each goal in goals
-      div.goal
-        div.name= goal.name
-        div.weight= goal.weight
-        div.value= goal.value
+    - if (typeof(goals) != 'undefined')
+      - each goal in goals
+        div.goal
+          div.name= goal.name
+          div.weight= goal.weight
+          div.value= goal.value
   fieldset
     legend current weight
     div.weight
+    - if (typeof(weights) != 'undefined')
       div.weight= weights.weight
   fieldset
     legend workout units
