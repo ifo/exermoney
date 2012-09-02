@@ -23,7 +23,10 @@ app.configure ->
 
 app.configure "development", ->
   mongoose.connect connection.development
-  app.use express.errorHandler()
+  app.use express.errorHandler(
+    dumpExceptions: true
+    showStack: true
+  )
 
 app.configure "production", ->
   mongoose.connect connection.production

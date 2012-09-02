@@ -30,9 +30,12 @@ block content
     legend current weight
     div.weight
     - if (typeof(weights) != 'undefined')
-      div.weight= weights.weight
+      - each weight in weights
+        div.weight= weight.weight
   fieldset
     legend workout units
     - each unit in units
       div.unit
         div.unit= unit.name
+  div.user= user
+  div.weights= user.weights

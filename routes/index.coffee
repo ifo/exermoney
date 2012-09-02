@@ -18,18 +18,16 @@ user = models.User
 
 module.exports =
   index: (req, res) ->
-    weight.find {}, (err, weight) ->
-      goal.find {}, (err, goal) ->
-        unit.find {}, (err, unit) ->
-          workouttype.find {}, (err, workouttype) ->
-            workout.find {}, (err, workout) ->
-              res.render 'index',
-                title: 'exermoney'
-                workouts: workout
-                workouttypes: workouttype
-                goals: goal
-                weights: weight[weight.length-1]
-                units: unit
+    unit.find {}, (err, unit) ->
+      user.find {"name" : "Steve"}, (err, usr) ->
+        res.render 'index',
+          title: 'exermoney'
+          user: usr
+          workouts: usr.workouts
+          workouttypes: usr.workouttypes
+          goals: usr.goals
+          weights: usr.weights
+          units: unit
 
   newWorkout: (req, res) ->
     workouttype.find {}, (err, workouttype) ->
@@ -68,10 +66,18 @@ module.exports =
       res.redirect '/'
 
   addWeight: (req, res) ->
-    newWeight = {}
-    newWeight.weight = parseFloat req.body.weight
-    new weight(newWeight).save ->
-      res.redirect '/'
+    user.findOne {"name" : "Steve"}, (err, usr) ->
+      newWeight = new weight
+      newWeight.weight = parseFloat req.body.weight
+      if usr.weights && usr.weights.length
+        usr.weights.push(newWeight)
+      else
+        usr.weights = [newWeight]
+      usr.save ->
+      #toAddWeight = new weight newWeight
+      #usr.weights.push(newWeight) ->
+        #usr.save ->
+        res.redirect '/'
 
   newUnit: (req, res) ->
     res.render 'addunit'
