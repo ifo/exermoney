@@ -36,10 +36,12 @@ module.exports =
         workouttypes: workouttype
 
   addWorkout: (req, res) ->
-    newWorkout = req.body.workout
-    newWorkout.number = parseFloat newWorkout.number
-    new workout(newWorkout).save ->
-      res.redirect '/'
+    user.findOne {"name": "Steve"}, (err, usr) ->
+      newWorkout = req.body.workout
+      newWorkout.number = parseFloat newWorkout.number
+      usr.workouts.push(newWorkout)
+      usr.save ->
+        res.redirect '/'
 
   newWorkoutType: (req, res) ->
     unit.find {}, (err, unit) ->
@@ -48,22 +50,29 @@ module.exports =
         units: unit
 
   addWorkoutType: (req, res) ->
-    newWorkouttype = req.body.workouttype
-    newWorkouttype.value = parseFloat newWorkouttype.value
-    newWorkouttype.per = parseFloat newWorkouttype.per
-    new workouttype(req.body.workouttype).save ->
-      res.redirect '/'
+    user.findOne {"name": "Steve"}, (err, usr) ->
+      newWorkouttype = req.body.workouttype
+      newWorkouttype.value = parseFloat newWorkouttype.value
+      newWorkouttype.per = parseFloat newWorkouttype.per
+      usr.workouttypes.push(newWorkouttype)
+      usr.save ->
+        res.redirect '/'
 
   newGoal: (req, res) ->
     res.render 'addgoal',
       title: 'additional goal'
 
   addGoal: (req, res) ->
-    newGoal = req.body.goal
-    newGoal.value = parseFloat newGoal.value
-    newGoal.weight = parseFloat newGoal.weight
-    new goal(newGoal).save ->
-      res.redirect '/'
+    user.findOne {"name" : "Steve"}, (err, usr) ->
+      newGoal = req.body.goal
+      newGoal.value = parseFloat newGoal.value
+      newGoal.weight = parseFloat newGoal.weight
+      if usr.goals && usr.goals.length
+        usr.goals.push(newGoal)
+      else
+        usr.goals = [newGoal]
+      usr.save ->
+        res.redirect '/'
 
   addWeight: (req, res) ->
     user.findOne {"name" : "Steve"}, (err, usr) ->
