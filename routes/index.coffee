@@ -3,8 +3,6 @@
 # * GET home page.
 # 
 
-# placeholder objects
-
 models = require '../models/workoutmodels'
 
 unit = models.Unit
@@ -94,8 +92,8 @@ module.exports =
       res.redirect '/'
 
   newUser: (req, res) ->
-    res.render 'adduser'
-      title: 'new user'
+    res.render 'register'
+      title: 'register'
 
   addUser: (req, res) ->
     newUser = req.body.user
