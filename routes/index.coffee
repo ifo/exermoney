@@ -2,6 +2,7 @@
 #
 # * GET home page.
 # 
+hf = require './helperfunctions'
 
 models = require '../models/workoutmodels'
 
@@ -100,4 +101,17 @@ module.exports =
     newUser.balance = 0
     new user(newUser).save ->
       res.redirect '/'
+
+  newSession: (req, res) ->
+    res.render 'login'
+      title: 'login'
+      redirect: req.query.redirect or req.redirect
+  
+  addSession: (req, res) ->
+    authenticated = hf.authenticate req.body.username, req.body.password
+    if authenticated
+      req.session.authenticated = true
+      res.redirect '/'
+    else
+      res.redirect '/session/new'
 
