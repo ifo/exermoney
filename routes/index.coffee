@@ -21,6 +21,7 @@ module.exports =
       user.findOne {"name" : "Steve"}, (err, usr) ->
         res.render 'index',
           title: 'exermoney'
+          balance: usr.balance
           workouts: usr.workouts
           workouttypes: usr.workouttypes
           goals: usr.goals
@@ -108,10 +109,12 @@ module.exports =
       redirect: req.query.redirect or req.redirect
   
   addSession: (req, res) ->
-    authenticated = hf.authenticate req.body.username, req.body.password
-    if authenticated
-      req.session.authenticated = true
-      res.redirect '/'
-    else
-      res.redirect '/session/new'
+    hf.authenticate req.body.username, req.body.password, (authenticated) ->
+      hf.getuseridbyname req.body.username, (uid) ->
+        if authenticated
+          req.session.authenticated = true
+          req.session.uid = uid
+          res.redirect '/'
+        else
+          res.redirect '/session/new'
 
