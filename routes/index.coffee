@@ -18,7 +18,7 @@ user = models.User
 module.exports =
   index: (req, res) ->
     unit.find {}, (err, unit) ->
-      user.findOne {"name" : "Steve"}, (err, usr) ->
+      user.findById req.session.uid, (err, usr) ->
         res.render 'index',
           title: 'exermoney'
           balance: usr.balance
@@ -36,7 +36,7 @@ module.exports =
         workouttypes: workouttype
 
   addWorkout: (req, res) ->
-    user.findOne {"name": "Steve"}, (err, usr) ->
+    user.findById req.session.uid, (err, usr) ->
       newWorkout = req.body.workout
       newWorkout.number = parseFloat newWorkout.number
       usr.workouts.push(newWorkout)
@@ -50,7 +50,7 @@ module.exports =
         units: unit
 
   addWorkoutType: (req, res) ->
-    user.findOne {"name": "Steve"}, (err, usr) ->
+    user.findById req.session.uid, (err, usr) ->
       newWorkouttype = req.body.workouttype
       newWorkouttype.value = parseFloat newWorkouttype.value
       newWorkouttype.per = parseFloat newWorkouttype.per
@@ -63,7 +63,7 @@ module.exports =
       title: 'additional goal'
 
   addGoal: (req, res) ->
-    user.findOne {"name" : "Steve"}, (err, usr) ->
+    user.findById req.session.uid, (err, usr) ->
       newGoal = req.body.goal
       newGoal.value = parseFloat newGoal.value
       newGoal.weight = parseFloat newGoal.weight
@@ -75,7 +75,7 @@ module.exports =
         res.redirect '/'
 
   addWeight: (req, res) ->
-    user.findOne {"name" : "Steve"}, (err, usr) ->
+    user.findById req.session.uid, (err, usr) ->
       newWeight = new weight
       newWeight.weight = parseFloat req.body.weight
       if usr.weights && usr.weights.length
