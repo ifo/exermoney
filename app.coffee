@@ -31,7 +31,7 @@ app.configure "development", ->
   )
 
 app.configure "production", ->
-  mongoose.connect connection.production
+  mongoose.connect url.parse process.env.MONGOHQ_URL
   app.use express.errorHandler()
 
 loginRequired = (req, res, next) ->
