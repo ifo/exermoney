@@ -16,15 +16,16 @@ app.configure ->
   app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
-  app.use express.cookieParser('to add secret here')
+  app.use express.cookieParser(process.env.COOKIE_SECRET)
   app.use express.session()
   app.use app.router
   app.use express.static(path.join(__dirname, "public"))
 
 app.configure "development", ->
   #connection.coffee file containing connection string information
-  connection = require("./connection")
-  mongoose.connect connection.development
+  #connection = require("./connection")
+  #mongoose.connect connection.development
+  mongoose.connect process.env.MONGO_CONNECTION
   app.use express.errorHandler(
     dumpExceptions: true
     showStack: true
