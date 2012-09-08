@@ -7,6 +7,7 @@ routes = require("./routes")
 http = require("http")
 path = require("path")
 mongoose = require("mongoose")
+mongodbstore = require("connect-mongo")(express)
 app = express()
 app.configure ->
   app.set "port", process.env.PORT or 3000
@@ -17,22 +18,24 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser(process.env.COOKIE_SECRET)
-  app.use express.session()
+  app.use express.session(
+    secret: process.env.COOKIE_SECRET
+    store: mongodbstore(
+      url: process.env.SESSION_CONNECTION
+    )
+  )
   app.use app.router
   app.use express.static(path.join(__dirname, "public"))
 
 app.configure "development", ->
-  #connection.coffee file containing connection string information
-  #connection = require("./connection")
-  #mongoose.connect connection.development
-  mongoose.connect process.env.MONGO_CONNECTION
+  mongoose.connect process.env.MONGOOSE_CONNECTION
   app.use express.errorHandler(
     dumpExceptions: true
     showStack: true
   )
 
 app.configure "production", ->
-  mongoose.connect url.parse process.env.MONGOHQ_URL
+  mongoose.connect url.parse process.env.MONGOOSE_CONNECTION
   app.use express.errorHandler()
 
 loginRequired = (req, res, next) ->
