@@ -20,7 +20,7 @@ app.configure ->
   app.use express.cookieParser(process.env.COOKIE_SECRET)
   app.use express.session(
     secret: process.env.COOKIE_SECRET
-    store: mongodbstore(
+    store: mongodbstore( 
       url: process.env.SESSION_CONNECTION
     )
   )
@@ -35,7 +35,7 @@ app.configure "development", ->
   )
 
 app.configure "production", ->
-  mongoose.connect url.parse process.env.MONGOOSE_CONNECTION
+  mongoose.connect process.env.MONGOOSE_CONNECTION
   app.use express.errorHandler()
 
 loginRequired = (req, res, next) ->
