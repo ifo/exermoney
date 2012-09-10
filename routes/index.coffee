@@ -30,10 +30,10 @@ module.exports =
           user: usr
 
   newWorkout: (req, res) ->
-    workouttype.find {}, (err, workouttype) ->
+    user.findById req.session.uid, (err, usr) ->
       res.render 'addworkout',
         title: 'new workout'
-        workouttypes: workouttype
+        workouttypes: usr.workouttypes
 
   addWorkout: (req, res) ->
     user.findById req.session.uid, (err, usr) ->
