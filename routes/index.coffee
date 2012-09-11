@@ -4,6 +4,7 @@
 # 
 hf = require './helperfunctions'
 
+mongoose = require 'mongoose'
 models = require '../models/workoutmodels'
 
 unit = models.Unit
@@ -40,6 +41,13 @@ module.exports =
       newWorkout = req.body.workout
       newWorkout.number = parseFloat newWorkout.number
       usr.workouts.push(newWorkout)
+      wot = usr.workouttypes.id(newWorkout.type)
+      ###
+      res.render 'error',
+        error: wot.name
+        errors: [wot]
+      ###
+      usr.balance += newWorkout.number * wot.value / wot.per
       usr.save ->
         res.redirect '/'
 
