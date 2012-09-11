@@ -9,44 +9,7 @@ module.exports =
       return
     callback false
 
-  # really wasteful and will be removed
-  updatebalancebyuserid: (userid, value, number, callback) ->
-    user.findById userid, (err, usr) ->
-      usr.balance = usr.balance + value * number
-      callback true
-
-  # really wasteful and will be removed
-  addtobalance: (value, number, callback) ->
-    callback value * number
-
   getuseridbyname: (name, callback) ->
     user.findOne {"name": name}, (err, usr) ->
       callback usr._id
 
-  # replaced by mongoose subdoc get by id:
-  # subdocbyid = doc.subdoc.id(id) - where id is a string of the hex id
-  ###
-  getworkouttype: (workouttypeid, workouttypes, callback) ->
-    i = 0
-    while i < workouttypes.length
-      if workouttypes[i]._id is mongoose.Types.ObjectId(workouttypeid)
-        callback workouttypes[i]
-        return
-      i++
-    
-    workouttype = 
-      (wt for wt in workouttypes when workouttypes._id is workouttypeid)
-    callback workouttype[0]
-    
-  ###
-  ###
-  getworkouttype: (workouttypeid, workouttypes) ->
-    i = 0
-    while i < workouttypes.length
-      if workouttypes[i]._id is mongoose.Types.ObjectId(workouttypeid)
-        return workouttypes[i]
-      i++
-  ###
-  getworkouttype: (workouttypeid) ->
-    workouttype.findById workouttypeid, (err, wotype) ->
-      return wotype
