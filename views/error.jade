@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  div.error= error
+  - if (typeof(errors) != 'undefined')
+    - each err in errors
+      div.err= err

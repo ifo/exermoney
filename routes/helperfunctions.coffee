@@ -9,10 +9,15 @@ module.exports =
       return
     callback false
 
-  updatebalance: (userid, value, number, callback) ->
+  # really wasteful and will be removed
+  updatebalancebyuserid: (userid, value, number, callback) ->
     user.findById userid, (err, usr) ->
       usr.balance = usr.balance + value * number
       callback true
+
+  # really wasteful and will be removed
+  addtobalance: (value, number, callback) ->
+    callback value * number
 
   getuseridbyname: (name, callback) ->
     user.findOne {"name": name}, (err, usr) ->
