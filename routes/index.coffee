@@ -121,7 +121,7 @@ module.exports =
         else
           res.redirect '/session/new'
 
-  error: (req, res) ->
+  dd: (req, res) ->
     res.render
       error: req.t
       errors: req.ta
