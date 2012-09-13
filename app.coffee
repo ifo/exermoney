@@ -66,6 +66,11 @@ app.post '/user/new', loginRequired, routes.addUser
 app.get '/session/new', routes.newSession
 app.post '/session/new', routes.addSession
 
+
+#catch all
+app.all '*', (req, res) ->
+  res.redirect '/'
+
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
 
